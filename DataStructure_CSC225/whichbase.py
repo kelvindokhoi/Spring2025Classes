@@ -1,0 +1,1 @@
+i,j=int,input;exec('a,k=map(str,j().split());print(a,0 if{*"89"}&{*k}else i(k,8),i(k),i(k,16));'*i(j()))

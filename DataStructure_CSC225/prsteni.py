@@ -1,0 +1,1 @@
+import math;input();a,*b,=map(int,input().split());print(*[f'{a//(l:=math.gcd(a,x))}/{x//l}'for x in b],sep='\n')
