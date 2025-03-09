@@ -60,6 +60,15 @@ class Deque:
             else:s = f"{s} {p.var}"
             p=p.next
         return s
+    def blah(self):
+        p=self.head
+        if p is None:return
+        while p.next is not None:
+            if p.var==p.next.var+1:
+                p.var +=1;p.next.var-=1
+                return
+            p=p.next
+        return
     def rm(self,value):
         p=self.head
         if p is None or self.tail is None:return
@@ -97,6 +106,7 @@ print("4: rm tail")
 print("5: print length")
 print("6: iterate and print")
 print("7: remove a specific value")
+print("8: bralh")
 while True:
     n=int(input("Your choice: "))
     if n==1:
@@ -119,3 +129,10 @@ while True:
     if n==7:
         mylist.rm(int(input("Remove what? ")))
         print(mylist)
+    if n==8:
+        mylist=Deque()
+        for x in [3,9,11,16,17,4]:
+            mylist.addtoTail(x)
+        print(f"prev list: {mylist}")
+        mylist.blah()
+        print(f"After: {mylist}")
