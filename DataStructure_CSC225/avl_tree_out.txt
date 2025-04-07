@@ -1,0 +1,33 @@
+
+Adding 2.....
+2 
+2 
+2 
+----------------------------------------------
+Adding 0.....
+0 2 
+2 0 
+0 2 
+----------------------------------------------
+Adding 1.....
+(1 | rb = 0, lb = 0, p = 0) is added to (0 | rb = 0, lb = 0, p = 2)
+Balancing...
+Currently at: 1 | rb = 0, lb = 0, p = 0
+Currently at: 0 | rb = 1, lb = 0, p = 2
+LR ROTATION
+RR-ing node 0 | rb = 1, lb = 0, p = 2
+A = 0 | rb = 1, lb = 0, p = 2
+B = 1 | rb = 0, lb = 0, p = 0
+T2 = None
+After RR rotation:
+Root: 2 | rb = 0, lb = 2, p = None
+Right None
+Left: 1 | rb = -1, lb = 0, p = 2
+LL-ing node 2 | rb = 0, lb = 2, p = None
+A = 2 | rb = 0, lb = 2, p = None
+B = 1 | rb = -1, lb = 0, p = 2
+T2 = None
+0 1 2 
+1 0 2 
+0 2 1 
+----------------------------------------------
