@@ -78,6 +78,34 @@ class AVL_Tree:
                     self.LR(parent)
                 return
             node = parent
+    def negbalancetree(self,node):
+        # adding lb and rb to the tree
+        while node is not None:
+            print(f'Currently at: {node}')
+            parent = node.parent
+            if parent is None:
+                break
+            if node.val>parent.val:
+                parent.rb -= 1
+            else:
+                parent.lb -= 1
+            # finished incrementing
+            balance = parent.rb - parent.lb
+            # trying the RR and RL
+            if balance == 2:
+                if 1>=node.rb-node.lb>=0:
+                    self.RR(parent)
+                else:
+                    self.RL(parent)
+                return
+            # trying the LL and LR
+            if balance == -2:
+                if -2<node.rb-node.lb<1:
+                    self.LL(parent)
+                else:
+                    self.LR(parent)
+                return
+            node = parent
     def RR(self,node):
         print('RR-ing node', node)
         A = node
@@ -183,9 +211,101 @@ class AVL_Tree:
         self.postorderPrint(currnode.right)
         print(currnode.val,end=' ')
     def delete(self,value):
-        ...
+        if self.root is None:
+            return
+        if self.root.val == value:
+            if self.root.right is None and self.root.left is None:
+                self.__init__()
+                return
+            if self.root.right is None:
+                # nothing in the right, so go left
+                # find the rightmost left
+                p = self.root.left
+                follow = self.root
+                while p is not None:
+                    follow = p
+                    p = p.right
+                self.root.val = follow.val
+                parent = follow.parent
+                if follow.val > parent.val:
+                    parent.right = p
+                else:
+                    parent.left = p
+                if p is not None:
+                    p.parent = parent
+                self.negbalancetree(p)
+                return
+            else:
+                p = self.root.right
+                follow = self.root
+                while p is not None:
+                    follow = p
+                    p = p.left
+                self.root.val = follow.val
+                parent = follow.parent
+                if follow.val > parent.val:
+                    parent.right = p
+                else:
+                    parent.left = p
+                if p is not None:
+                    p.parent = parent
+                self.negbalancetree(p)
+                return
+        else:
+            # go until found the value or reached the end
+            p = self.root
+            while True:
+                follow = p
+                if value>p.val:
+                    p = p.right
+                elif value<p.val:
+                    p = p.left
+                else:
+                    node_to_delete = p
+                    if node_to_delete.right is None and node_to_delete.left is None:
+                        parent = node_to_delete.parent
+                        if parent.right == node_to_delete:
+                            parent.right = None
+                        else:
+                            parent.left = None
+                        return
+                    if node_to_delete.right is None:
+                        p = node_to_delete.left
+                        follow = node_to_delete
+                        while p is not None:
+                            follow = p
+                            p = p.right
+                        node_to_delete.val = follow.val
+                        parent = follow.parent
+                        if follow.val > parent.val:
+                            parent.right = p
+                        else:
+                            parent.left = p
+                        if p is not None:
+                            p.parent = parent
+                        self.negbalancetree(p)
+                        return
+                    else:
+                        p = node_to_delete.right
+                        follow = node_to_delete
+                        while p is not None:
+                            follow = p
+                            p = p.left
+                        node_to_delete.val = follow.val
+                        parent = follow.parent
+                        if follow.val > parent.val:
+                            parent.right = p
+                        else:
+                            parent.left = p
+                        if p is not None:
+                            p.parent = parent
+                        self.negbalancetree(p)
+                        return
+                if p is None:
+                    return
 
-nums = [2,0,1]
+
+nums = [1,3,2,4,56,3,5,4,-99,4,6,3,-11]
 mytree = AVL_Tree()
 mytree.inorder()
 for i in nums:
@@ -195,4 +315,10 @@ for i in nums:
     mytree.preorder() #SLR
     mytree.postorder() #LRS
     print('----------------------------------------------')
-
+while True:
+    print('What do you want to delete?')
+    num = input('Put your number here: ')
+    mytree.delete(int(num))
+    mytree.inorder() #LSR
+    mytree.preorder() #SLR
+    mytree.postorder() #LRS
